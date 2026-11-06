@@ -1,5 +1,6 @@
 ---
-const baseUrl = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL;
+const baseUrl = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
 
 const technologies = [
   "Python",

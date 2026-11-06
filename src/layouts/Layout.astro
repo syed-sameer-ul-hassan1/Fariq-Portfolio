@@ -9,8 +9,9 @@ interface Props {
 }
 
 const { title, showPreloader = true } = Astro.props;
-const siteUrl = "https://themewagon.github.io/fariq/";
-const baseUrl = import.meta.env.BASE_URL;
+const siteUrl = Astro.site ? Astro.site.toString() : "https://fariq.dev/";
+const rawBase = import.meta.env.BASE_URL;
+const baseUrl = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
 ---
 
 <!doctype html>
@@ -44,21 +45,20 @@ const baseUrl = import.meta.env.BASE_URL;
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Syed-Fariq Ali Shah Portfolio" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Syed-Fariq Ali Shah",
-        "alternateName": "Fariq",
-        "url": "https://themewagon.github.io/fariq/",
-        "image": "https://themewagon.github.io/fariq/og.image.png",
-        "sameAs": [
-          "https://github.com/Syed-fariq-ali-shah/",
-          "https://linkedin.com/in/syed-fariq-ali-shah-437a0b3a9"
-        ],
-        "jobTitle": "Data Scientist",
-        "description": "Data Scientist & Software Developer turning ideas into practical software solutions."
-      }
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Syed-Fariq Ali Shah",
+      "alternateName": "Fariq",
+      "url": siteUrl,
+      "image": `${siteUrl}og.image.png`,
+      "sameAs": [
+        "https://github.com/Syed-fariq-ali-shah/",
+        "https://linkedin.com/in/syed-fariq-ali-shah-437a0b3a9"
+      ],
+      "jobTitle": "Data Scientist",
+      "description": "Data Scientist & Software Developer turning ideas into practical software solutions."
+    })}>
     </script>
   </head>
   <body class="bg-[--background] flex flex-col min-h-screen relative overflow-x-hidden">
