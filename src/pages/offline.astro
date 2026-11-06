@@ -1,0 +1,91 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<Layout title="Offline - No Internet Connection" showPreloader={false}>
+  <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-10 w-full relative z-10">
+    <div class="w-full max-w-xl mx-auto space-y-6 sm:space-y-8 p-7 sm:p-10 md:p-12 rounded-3xl bg-[#121215]/85 border border-[#ffffff15] backdrop-blur-2xl shadow-2xl text-center grain-surface">
+      <div class="space-y-3">
+        <div class="flex justify-center pt-2">
+          <div class="size-20 sm:size-24 rounded-3xl bg-[#1c1c20] border border-[#ffffff15] flex items-center justify-center text-[var(--sec)] shadow-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="size-10 sm:size-12 pointer-events-none">
+              <line x1="1" y1="1" x2="23" y2="23"/>
+              <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/>
+              <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/>
+              <path d="M10.71 5.05A16 16 0 0 1 22.58 9"/>
+              <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+              <line x1="12" y1="20" x2="12.01" y2="20"/>
+            </svg>
+          </div>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl font-semibold text-[var(--white)] tracking-tight">
+          No Internet Connection
+        </h1>
+        <p class="text-sm sm:text-base text-[var(--white-icon)] max-w-md mx-auto leading-relaxed">
+          It looks like your device is currently offline. Please check your network connection, Wi-Fi, or cellular data and try again.
+        </p>
+
+        <p id="network-live-status" class="text-xs font-mono text-amber-400/90 pt-1">
+          Awaiting network reconnect...
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <button
+          id="retry-btn"
+          type="button"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[var(--sec)] text-[#09090b] font-semibold text-sm hover:bg-[#859cb6] apple-btn magnetic-btn cursor-pointer transition-all duration-300 will-change-transform"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 pointer-events-none">
+            <polyline points="23 4 23 10 17 10"/>
+            <polyline points="1 20 1 14 7 14"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+          <span>Retry Connection</span>
+        </button>
+
+        <a
+          href={`${baseUrl}/`}
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-[var(--white-icon-tr)] bg-[#1c1c209c] text-[var(--white-icon)] hover:bg-[var(--white-icon-tr)] hover:border-[#6C839C]/40 font-medium text-sm apple-btn magnetic-btn cursor-pointer transition-all duration-300 will-change-transform"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 pointer-events-none">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Go Back to Main Page</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script is:inline>
+  const retryBtn = document.getElementById("retry-btn");
+  const statusEl = document.getElementById("network-live-status");
+
+  function handleOnline() {
+    if (statusEl) {
+      statusEl.textContent = "Connection restored. Redirecting...";
+      statusEl.className = "text-xs font-mono text-emerald-400 pt-1";
+    }
+    setTimeout(() => {
+      window.location.reload();
+    }, 800);
+  }
+
+  window.addEventListener("online", handleOnline);
+
+  retryBtn?.addEventListener("click", () => {
+    if (navigator.onLine) {
+      handleOnline();
+    } else {
+      if (statusEl) {
+        statusEl.textContent = "Still offline. Please check your network.";
+      }
+    }
+  });
+</script>

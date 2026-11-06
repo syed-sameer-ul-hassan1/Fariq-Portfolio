@@ -1,0 +1,398 @@
+---
+import CustomCursor from "../React/CustomCursor.tsx";
+import Preloader from "../components/Preloader.astro";
+import CookieBanner from "../components/CookieBanner.astro";
+
+interface Props {
+  title: string;
+  showPreloader?: boolean;
+}
+
+const { title, showPreloader = true } = Astro.props;
+const siteUrl = "https://themewagon.github.io/fariq/";
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title} | Syed-Fariq Ali Shah</title>
+    <meta
+      name="description"
+      content="Syed-Fariq Ali Shah - Data Scientist & Software Developer Portfolio."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href={`${baseUrl}/Img/favicon.png`} />
+    <link rel="canonical" href={siteUrl} />
+
+    <link
+      rel="preload"
+      href={`${baseUrl}/fonts/k2d-latin-400-normal.woff2`}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <meta property="og:title" content="Syed-Fariq Ali Shah | Data Scientist" />
+    <meta
+      property="og:description"
+      content="Portfolio of Syed-Fariq Ali Shah, Data Scientist & Software Developer."
+    />
+    <meta property="og:image" content={`${siteUrl}og.image.png`} />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Syed-Fariq Ali Shah Portfolio" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Syed-Fariq Ali Shah",
+        "alternateName": "Fariq",
+        "url": "https://themewagon.github.io/fariq/",
+        "image": "https://themewagon.github.io/fariq/og.image.png",
+        "sameAs": [
+          "https://github.com/Syed-fariq-ali-shah/",
+          "https://linkedin.com/in/syed-fariq-ali-shah-437a0b3a9"
+        ],
+        "jobTitle": "Data Scientist",
+        "description": "Data Scientist & Software Developer turning ideas into practical software solutions."
+      }
+    </script>
+  </head>
+  <body class="bg-[--background] flex flex-col min-h-screen relative overflow-x-hidden">
+    {showPreloader && <Preloader />}
+    <CustomCursor client:load />
+
+    <div
+      id="offline-indicator"
+      class="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] px-4 py-2 rounded-full bg-[#1c1c20e6] border border-amber-500/30 text-amber-300 text-xs font-mono flex items-center gap-2 backdrop-blur-xl shadow-2xl transition-all duration-300 -translate-y-16 opacity-0 pointer-events-none grain-surface"
+    >
+      <span class="size-2 rounded-full bg-amber-400"></span>
+      <span>No Internet Connection</span>
+    </div>
+
+    <div class="noise-overlay pointer-events-none fixed inset-0 z-40 opacity-[0.03]" aria-hidden="true"></div>
+
+    <div class="w-full flex-1 sm:px-28 lg:px-20 px-9 relative z-10">
+      <slot />
+    </div>
+    <slot name="footer" />
+    <CookieBanner />
+
+    <script>
+      import { initPortfolioAnimations } from "../scripts/animations.ts";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        initPortfolioAnimations();
+      });
+    </script>
+    <script is:inline>
+      (() => {
+        const el = document.getElementById("offline-indicator");
+        if (!el) return;
+        function update() {
+          if (!navigator.onLine) {
+            el.classList.remove("-translate-y-16", "opacity-0", "pointer-events-none");
+            el.classList.add("translate-y-0", "opacity-100");
+          } else {
+            el.classList.add("-translate-y-16", "opacity-0", "pointer-events-none");
+            el.classList.remove("translate-y-0", "opacity-100");
+          }
+        }
+        window.addEventListener("online", update);
+        window.addEventListener("offline", update);
+        if (!navigator.onLine) update();
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @font-face {
+    font-family: "K2D";
+    src: url("/fonts/k2d-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "K2D";
+    src: url("/fonts/k2d-latin-500-normal.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "K2D";
+    src: url("/fonts/k2d-latin-600-normal.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "K2D";
+    src: url("/fonts/k2d-latin-700-normal.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "K2D";
+    src: url("/fonts/k2d-latin-800-normal.woff2") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "K2D";
+    src: url("/fonts/k2d-latin-300-normal.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :root {
+    --background: #09090b;
+    --sec: #6C839C;
+    --white: #dfdfdf;
+    --white-icon: #f3f3f398;
+    --white-icon-tr: #f3f3f310;
+  }
+
+  * {
+    font-family:
+      "K2D",
+      -apple-system,
+      system-ui,
+      sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  *::selection {
+    background-color: var(--sec);
+    color: var(--background);
+  }
+
+  ::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(108, 131, 156, 0);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0) transparent;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.7'/%3E%3C/svg%3E");
+  }
+
+  :root {
+    --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-google: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --grain-pattern: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.22'/%3E%3C/svg%3E");
+  }
+
+  .apple-card,
+  .apple-btn,
+  .magnetic-btn,
+  .apple-input,
+  .grain-surface,
+  button,
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    background-image: var(--grain-pattern);
+    background-repeat: repeat;
+    background-size: 140px 140px;
+  }
+
+  h1:not(.hero-title):not(.shiny-sec):not(.shiny-white),
+  h2:not(.shiny-sec):not(.shiny-white),
+  h3:not(.shiny-sec):not(.shiny-white),
+  h4:not(.shiny-sec):not(.shiny-white),
+  h5:not(.shiny-sec):not(.shiny-white),
+  h6:not(.shiny-sec):not(.shiny-white),
+  p:not(.typewriter-container):not(.shiny-sec):not(.shiny-white),
+  li:not(.shiny-sec):not(.shiny-white),
+  label,
+  #preloader-count,
+  .text-grain {
+    background-image: var(--grain-pattern), linear-gradient(currentColor, currentColor);
+    background-size: 140px 140px, auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .shiny-sec {
+    background-image: var(--grain-pattern), linear-gradient(135deg, #6C839C 25%, #f1f5f9 50%, #6C839C 75%) !important;
+    background-size: 140px 140px, 400% 100% !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: shine 3s linear infinite;
+  }
+
+  .shiny-white {
+    background-image: var(--grain-pattern), linear-gradient(135deg, #a1a1aa 25%, #ffffff 50%, #a1a1aa 75%) !important;
+    background-size: 140px 140px, 400% 100% !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: shine 3s linear infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: 100% 50%;
+    }
+    30%,
+    70% {
+      background-position: 0% 50%;
+    }
+  }
+
+  button,
+  .apple-btn,
+  .magnetic-btn {
+    -webkit-text-fill-color: initial;
+  }
+
+  .hero-title {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+  }
+
+  .hero-line-inner {
+    display: block;
+    color: var(--sec) !important;
+    -webkit-text-fill-color: var(--sec) !important;
+    will-change: transform, opacity;
+  }
+
+  .typewriter-container,
+  #typewriter-text,
+  .typewriter-cursor {
+    -webkit-text-fill-color: initial !important;
+  }
+
+  svg {
+    -webkit-text-fill-color: initial;
+  }
+
+  .reveal-init {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.85s var(--ease-apple), transform 0.85s var(--ease-apple);
+    will-change: opacity, transform;
+  }
+
+  .stagger-1 { transition-delay: 80ms; }
+  .stagger-2 { transition-delay: 160ms; }
+  .stagger-3 { transition-delay: 240ms; }
+  .stagger-4 { transition-delay: 320ms; }
+  .stagger-5 { transition-delay: 400ms; }
+
+  .apple-card {
+    transition: transform 0.45s var(--ease-apple), box-shadow 0.45s var(--ease-apple), border-color 0.45s ease;
+  }
+  .apple-card:hover {
+    transform: translateY(-6px) scale(1.012);
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(108, 131, 156, 0.16);
+    border-color: rgba(108, 131, 156, 0.4);
+  }
+
+  .apple-btn {
+    transition: transform 0.3s var(--ease-apple), background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .apple-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6), 0 0 16px rgba(108, 131, 156, 0.22);
+  }
+  .apple-btn:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  @keyframes appleHeroReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(32px) scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-hero-stagger {
+    opacity: 0;
+    animation: appleHeroReveal 0.9s var(--ease-apple) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal-init {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .animate-hero-stagger {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+</style>

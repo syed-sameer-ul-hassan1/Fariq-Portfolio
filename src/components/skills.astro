@@ -1,0 +1,37 @@
+---
+import LogoWall from "./logoWall.astro";
+import SkillsList from "../React/SkillsList.tsx";
+import LetterGlitch from "../React/LetterGlitch.tsx";
+---
+
+<section id="skills" class="min-h-screen lg:h-screen flex items-center justify-center py-16 md:py-20 border-t border-[#ffffff10] text-[var(--white)] relative">
+  <div class="max-w-5xl mx-auto w-full flex flex-col justify-evenly h-full space-y-8 md:space-y-10">
+    <div class="scroll-heading">
+      <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Expertise & Technologies</h2>
+      <h3 class="text-4xl md:text-5xl font-medium">Skills</h3>
+    </div>
+
+    <div>
+      <LogoWall />
+    </div>
+
+    <div class="flex flex-col lg:flex-row items-center gap-8 skills-content-group">
+      <div class="w-full lg:w-auto">
+        <SkillsList client:load />
+      </div>
+      <div
+        class="flex justify-center md:w-full md:h-[292px] size-[290px] pt-3 md:pt-9 md:ml-16"
+      >
+        <LetterGlitch
+          client:load
+          glitchColors={["#2c3238", "#444c56", "#6C839C"]}
+          glitchSpeed={33}
+          centerVignette={false}
+          outerVignette={true}
+          smooth={true}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
