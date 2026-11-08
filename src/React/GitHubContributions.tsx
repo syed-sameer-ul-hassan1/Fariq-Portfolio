@@ -104,7 +104,7 @@ export default function GitHubContributions({
   };
 
   return (
-    <div className="w-full max-w-xl rounded-2xl border border-[#ffffff15] bg-[#121215]/85 backdrop-blur-xl p-4 sm:p-5 grain-surface apple-card text-left shadow-xl transition-all duration-300 hover:border-[#6C839C]/40">
+    <div className="w-full max-w-xl rounded-2xl border border-[#ffffff15] bg-[#121215]/85 backdrop-blur-xl p-4 sm:p-5 grain-surface text-left shadow-xl">
       {/* Header */}
       <div className="flex items-center justify-between gap-3 mb-3 pb-3 border-b border-[#ffffff0f]">
         <div className="flex items-center gap-2">
@@ -170,7 +170,7 @@ export default function GitHubContributions({
                     return (
                       <div
                         key={day.date}
-                        className={`size-[8.5px] rounded-[2px] transition-transform duration-150 hover:scale-125 cursor-pointer ${LEVEL_COLORS[level]}`}
+                        className={`size-[8.5px] rounded-[2px] ${LEVEL_COLORS[level]}`}
                         onMouseEnter={() => setHoveredDay(day)}
                         onMouseLeave={() => setHoveredDay(null)}
                         title={`${day.count} contribution${day.count === 1 ? "" : "s"} on ${formatDate(day.date)}`}
