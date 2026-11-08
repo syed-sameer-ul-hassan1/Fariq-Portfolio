@@ -23,7 +23,10 @@ const baseUrl = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
       name="description"
       content="Syed-Fariq Ali Shah - Data Scientist & Software Developer Portfolio."
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <link rel="icon" type="image/png" href={`${baseUrl}/Img/favicon.png`} />
     <link rel="canonical" href={siteUrl} />
 
@@ -91,19 +94,72 @@ const baseUrl = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
     <script is:inline>
       (() => {
         const el = document.getElementById("offline-indicator");
-        if (!el) return;
-        function update() {
-          if (!navigator.onLine) {
-            el.classList.remove("-translate-y-16", "opacity-0", "pointer-events-none");
-            el.classList.add("translate-y-0", "opacity-100");
-          } else {
-            el.classList.add("-translate-y-16", "opacity-0", "pointer-events-none");
-            el.classList.remove("translate-y-0", "opacity-100");
+        if (el) {
+          function update() {
+            if (!navigator.onLine) {
+              el.classList.remove("-translate-y-16", "opacity-0", "pointer-events-none");
+              el.classList.add("translate-y-0", "opacity-100");
+            } else {
+              el.classList.add("-translate-y-16", "opacity-0", "pointer-events-none");
+              el.classList.remove("translate-y-0", "opacity-100");
+            }
           }
+          window.addEventListener("online", update);
+          window.addEventListener("offline", update);
+          if (!navigator.onLine) update();
         }
-        window.addEventListener("online", update);
-        window.addEventListener("offline", update);
-        if (!navigator.onLine) update();
+
+        // Disable zoom shortcuts and gestures across devices
+        window.addEventListener(
+          "wheel",
+          (e) => {
+            if (e.ctrlKey || e.metaKey) {
+              e.preventDefault();
+            }
+          },
+          { passive: false }
+        );
+
+        window.addEventListener("keydown", (e) => {
+          if (
+            (e.ctrlKey || e.metaKey) &&
+            (e.key === "+" ||
+              e.key === "-" ||
+              e.key === "=" ||
+              e.key === "_" ||
+              e.key === "0")
+          ) {
+            e.preventDefault();
+          }
+        });
+
+        document.addEventListener(
+          "touchstart",
+          (e) => {
+            if (e.touches && e.touches.length > 1) {
+              e.preventDefault();
+            }
+          },
+          { passive: false }
+        );
+
+        document.addEventListener("gesturestart", (e) => e.preventDefault());
+        document.addEventListener("gesturechange", (e) => e.preventDefault());
+        document.addEventListener("gestureend", (e) => e.preventDefault());
+
+        // Disable text selection dragging
+        document.addEventListener("selectstart", (e) => {
+          const target = e.target;
+          if (
+            target instanceof HTMLElement &&
+            (target.tagName === "INPUT" ||
+              target.tagName === "TEXTAREA" ||
+              target.isContentEditable)
+          ) {
+            return;
+          }
+          e.preventDefault();
+        });
       })();
     </script>
   </body>
@@ -160,6 +216,11 @@ const baseUrl = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
 
   html {
     scroll-behavior: smooth;
+    touch-action: pan-x pan-y;
+  }
+
+  body {
+    touch-action: pan-x pan-y;
   }
 
   :root {
@@ -170,7 +231,9 @@ const baseUrl = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
     --white-icon-tr: #f3f3f310;
   }
 
-  * {
+  *,
+  *::before,
+  *::after {
     font-family:
       "K2D",
       -apple-system,
@@ -179,9 +242,27 @@ const baseUrl = rawBase.endsWith("/") ? rawBase.slice(0, -1) : rawBase;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  input,
+  textarea,
+  [contenteditable="true"] {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
   }
 
   *::selection {
+    background: transparent;
+  }
+
+  input::selection,
+  textarea::selection {
     background-color: var(--sec);
     color: var(--background);
   }

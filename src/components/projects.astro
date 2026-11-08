@@ -52,7 +52,7 @@ const projects: Project[] = [
       </div>
       <a
         target="_blank"
-        href="https://github.com/Syed-fariq-ali-shah/"
+        href="https://github.com/Syed-fariq-ali-shah-bit/"
         aria-label="GitHub"
         class="inline-flex items-center gap-2 self-start sm:self-auto text-[var(--white-icon)] transition duration-300 ease-in-out border border-[var(--white-icon-tr)] px-4 py-2 rounded-full bg-[#1414149c] hover:bg-[var(--white-icon-tr)] apple-btn magnetic-btn text-sm md:text-base whitespace-nowrap will-change-transform"
       >
@@ -74,22 +74,29 @@ const projects: Project[] = [
       {
         projects.map((project, idx) => (
           <div class={`group reveal-init stagger-${idx + 1} project-card-item`}>
-            <a
-              href={project.preview}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block"
-            >
-              <div class="rounded-2xl overflow-hidden shadow-lg border border-[var(--white-icon-tr)] apple-card mb-3 md:mb-4">
+            <div class="block">
+              <a
+                href={project.preview}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block rounded-2xl overflow-hidden shadow-lg border border-[var(--white-icon-tr)] apple-card mb-3 md:mb-4"
+              >
                 <img
                   src={project.image}
                   alt={project.title}
                   class="w-full h-40 md:h-56 lg:h-60 object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 />
-              </div>
+              </a>
               <div class="flex items-center px-3">
                 <div class="flex-grow">
-                  <h4 class="text-xl md:text-2xl font-semibold text-[var(--white)]">{project.title}</h4>
+                  <a
+                    href={project.preview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-[var(--sec)] transition-colors"
+                  >
+                    <h4 class="text-xl md:text-2xl font-semibold text-[var(--white)]">{project.title}</h4>
+                  </a>
                   <span class="py-1 text-sm text-[var(--white-icon)]">
                     {project.status}
                   </span>
@@ -127,7 +134,7 @@ const projects: Project[] = [
                   </a>
                 </div>
               </div>
-            </a>
+            </div>
           </div>
         ))
       }

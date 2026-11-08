@@ -1,13 +1,15 @@
 ---
 import LikeButton from "../React/LikeButton.tsx";
+import GitHubContributions from "../React/GitHubContributions.tsx";
 
 const currentYear = new Date().getFullYear();
+const githubUsername = "syed-fariq-ali-shah-bit";
 ---
 
 <footer class="w-[96%] mx-auto rounded-t-3xl md:rounded-t-[2.5rem] border-t border-x border-[#ffffff15] py-16 md:py-20 bg-[#09090b]/95 backdrop-blur-sm sm:px-28 lg:px-20 px-9 relative z-10 shadow-[0_-8px_32px_rgba(0,0,0,0.5)] grain-surface">
   <div class="max-w-6xl mx-auto space-y-12">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
-      <div class="md:col-span-5 space-y-5 text-center md:text-left">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+      <div class="lg:col-span-4 space-y-5 text-center lg:text-left">
         <div>
           <h3 class="text-2xl font-semibold text-[var(--white)] tracking-tight">Syed Fariq Ali Shah</h3>
           <p class="text-[var(--white-icon)] text-sm mt-1">Data Scientist & Software Developer</p>
@@ -15,52 +17,44 @@ const currentYear = new Date().getFullYear();
         <p class="text-[var(--white-icon)] text-sm max-w-sm leading-relaxed">
           Crafting intelligent systems, data pipelines, and responsive web experiences.
         </p>
-        <div class="pt-2 flex justify-center md:justify-start">
+        <div class="pt-2 flex justify-center lg:justify-start">
           <LikeButton client:load />
         </div>
       </div>
 
-      <div class="md:col-span-3 space-y-4 text-center md:text-left">
+      <div class="lg:col-span-2 space-y-4 text-center lg:text-left">
         <h4 class="text-sm font-semibold uppercase tracking-wider text-[var(--sec)] shiny-sec">Navigation</h4>
         <ul class="space-y-2.5 text-sm text-[var(--white-icon)]">
           <li>
-            <a href="#home" class="inline-block">Home</a>
+            <a href="#home" class="inline-block hover:text-white transition-colors">Home</a>
           </li>
           <li>
-            <a href="#about" class="inline-block">About Me</a>
+            <a href="#about" class="inline-block hover:text-white transition-colors">About Me</a>
           </li>
           <li>
-            <a href="#skills" class="inline-block">Skills & Expertise</a>
+            <a href="#skills" class="inline-block hover:text-white transition-colors">Skills & Expertise</a>
           </li>
           <li>
-            <a href="#projects" class="inline-block">Projects</a>
+            <a href="#projects" class="inline-block hover:text-white transition-colors">Projects</a>
           </li>
           <li>
-            <a href="#contact" class="inline-block">Contact</a>
+            <a href="#contact" class="inline-block hover:text-white transition-colors">Contact</a>
           </li>
         </ul>
       </div>
 
-      <div class="md:col-span-4 flex flex-col items-center md:items-start w-full">
-        <div class="w-full max-w-xs">
-          <iframe
-            style="border-radius:12px; border:0;"
-            src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0"
-            class="w-full h-40"
-            allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"></iframe>
-        </div>
+      <div class="lg:col-span-6 flex flex-col items-center lg:items-start w-full">
+        <GitHubContributions client:load username={githubUsername} />
       </div>
     </div>
 
     <div class="pt-8 border-t border-[#ffffff10] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
       <div class="flex items-center space-x-5">
         <a
-          href="https://github.com/Syed-fariq-ali-shah/"
+          href={`https://github.com/${githubUsername}/`}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[var(--white-icon)] transition duration-300"
+          class="text-[var(--white-icon)] hover:text-white transition duration-300"
           aria-label="GitHub"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -71,7 +65,7 @@ const currentYear = new Date().getFullYear();
           href="https://linkedin.com/in/syed-fariq-ali-shah-437a0b3a9"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[var(--white-icon)] transition duration-300"
+          class="text-[var(--white-icon)] hover:text-white transition duration-300"
           aria-label="LinkedIn"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -79,8 +73,8 @@ const currentYear = new Date().getFullYear();
           </svg>
         </a>
         <a
-          href="mailto:fariq@orildo.dev"
-          class="text-[var(--white-icon)] transition duration-300"
+          href="mailto:syedfariq4477@gmail.com"
+          class="text-[var(--white-icon)] hover:text-white transition duration-300"
           aria-label="Email"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">

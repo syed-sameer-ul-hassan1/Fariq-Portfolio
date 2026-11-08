@@ -17,17 +17,21 @@ const SkillsList = () => {
 
   const skills = {
     "Python & C++": [
-      "point 1",
-      "point 2",
-      "point 3",
+      "Develop applications using Python and C++.",
+      "Apply Object-Oriented Programming and problem-solving techniques.",
+      "Work with data structures, algorithms, and file handling.",
     ],
-    "Data Analysis": [
-      "Point 1",
-      "Point 2",
+    "Data Analysis & Visualization": [
+      "Perform data cleaning, preprocessing, and exploratory data analysis (EDA).",
+      "Analyze and query datasets using Pandas, NumPy, and SQL.",
+      "Create meaningful visualizations using Matplotlib.",
+      "Extract insights, identify patterns, and support data-driven decisions.",
     ],
-    "Website Development": [
-      "point 1",
-      "point 2",
+    "AI & Intelligent Solutions": [
+      "Explore Machine Learning, Deep Learning, and Computer Vision.",
+      "Develop AI-driven solutions for real-world problems.",
+      "Explore NLP and intelligent automation applications.",
+      "Interested in applying AI to healthcare and medical innovation.",
     ],
   };
 

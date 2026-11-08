@@ -34,51 +34,146 @@ const navItems: NavItem[] = [
 ];
 ---
 
-<div class="flex justify-center w-full">
-  <nav
-    id="main-nav"
-    class="fixed left-1/2 -translate-x-1/2 z-[100] bg-[#121215e6] border border-[#ffffff15] backdrop-blur-2xl transition-all duration-300 ease-out bottom-6 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.7)] p-2 grain-surface"
+<!-- Mobile Bottom Navigation Dock (strictly mobile, hidden on md+) -->
+<nav
+  id="mobile-nav"
+  aria-label="Mobile Navigation"
+  class="fixed left-1/2 -translate-x-1/2 bottom-5 sm:bottom-6 z-[100] md:hidden bg-[#121215e6] border border-[#ffffff15] backdrop-blur-2xl rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.7)] px-2.5 py-1.5 w-max max-w-[95vw] grain-surface flex items-center justify-center transition-all duration-300 ease-out"
+>
+  <ul class="flex items-center gap-1.5">
+    {
+      navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            aria-label={item.label}
+            title={item.label}
+            class="nav-link magnetic-btn group relative flex items-center justify-center p-2.5 rounded-xl text-[var(--white-icon)] hover:bg-[var(--white-icon-tr)] hover:text-white hover:scale-105 active:scale-95 transition-all duration-250 ease-out will-change-transform"
+          >
+            <fragment set:html={item.icon} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<!-- Desktop Top Navigation (Visible at top, closes to left on scroll) -->
+<nav
+  id="desktop-top-nav"
+  aria-label="Desktop Top Navigation"
+  class="hidden md:flex fixed top-9 lg:top-10 left-0 z-[100] w-[70%] bg-[#121215e6] border border-[#ffffff15] border-l-0 backdrop-blur-2xl rounded-r-2xl shadow-[0_8px_32px_rgba(0,0,0,0.7)] pl-8 lg:pl-12 pr-6 py-3 grain-surface items-center justify-between"
+>
+  <a
+    href="#home"
+    class="nav-brand flex items-center text-lg font-bold tracking-tight text-[var(--sec)] hover:text-white transition-colors select-none"
   >
-    <ul class="flex items-center gap-1.5 md:gap-2">
-      {
-        navItems.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              aria-label={item.label}
-              title={item.label}
-              class="nav-link magnetic-btn flex items-center justify-center size-10 md:size-11 rounded-xl text-[var(--white-icon)] hover:bg-[var(--white-icon-tr)] hover:scale-105 active:scale-95 transition-all duration-300 ease-out will-change-transform"
-            >
-              <fragment set:html={item.icon} />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
-</div>
+    Fariq.
+  </a>
+
+  <ul class="flex items-center gap-2">
+    {
+      navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            aria-label={item.label}
+            class="nav-link magnetic-btn group relative flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-[var(--white-icon)] hover:bg-[var(--white-icon-tr)] hover:text-white hover:scale-105 active:scale-95 transition-all duration-300 ease-out will-change-transform whitespace-nowrap"
+          >
+            <fragment set:html={item.icon} />
+            <span class="text-xs md:text-sm font-medium tracking-wide">
+              {item.label}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<!-- Desktop Side Navigation (Opens from right along Y-axis on scroll) -->
+<nav
+  id="desktop-side-nav"
+  aria-label="Desktop Side Navigation"
+  class="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-[100] bg-[#121215e6] border border-[#ffffff15] border-r-0 backdrop-blur-2xl rounded-l-2xl shadow-[0_8px_32px_rgba(0,0,0,0.7)] px-2.5 py-4 grain-surface flex-col items-center gap-3"
+>
+  <a
+    href="#home"
+    aria-label="Home"
+    title="Fariq."
+    class="text-xs font-bold tracking-tight text-[var(--sec)] hover:text-white transition-colors pb-2 border-b border-white/10 w-full text-center select-none"
+  >
+    Fariq.
+  </a>
+
+  <ul class="flex flex-col items-center gap-1.5">
+    {
+      navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            aria-label={item.label}
+            title={item.label}
+            class="nav-link magnetic-btn group relative flex items-center justify-center p-2.5 rounded-xl text-[var(--white-icon)] hover:bg-[var(--white-icon-tr)] hover:text-white hover:scale-105 active:scale-95 transition-all duration-250 ease-out will-change-transform"
+          >
+            <fragment set:html={item.icon} />
+            <span class="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 mr-3 px-2.5 py-1 rounded-lg bg-[#141416f0] border border-white/15 text-[11px] font-medium text-white opacity-0 group-hover:opacity-100 transition-all duration-200 ease-out whitespace-nowrap shadow-2xl backdrop-blur-md -translate-x-1 group-hover:translate-x-0">
+              {item.label}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
 <style>
-  @keyframes navFloatIn {
-    0% {
-      opacity: 0;
-      transform: translate(-50%, 36px) scale(0.92);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%, 0) scale(1);
-    }
-  }
-
-  nav {
-    transform: translateX(-50%);
+  /* Base Mobile Nav */
+  #mobile-nav {
     will-change: transform, opacity;
-    animation: navFloatIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
   }
 
+  /* Desktop Top Nav */
+  #desktop-top-nav {
+    transform: translateX(0);
+    opacity: 1;
+    transition:
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  #desktop-top-nav.nav-closed-left {
+    transform: translateX(-105%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Desktop Side Nav */
+  #desktop-side-nav {
+    transform: translate(105%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  #desktop-side-nav.nav-open-right {
+    transform: translate(0, -50%) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Shared Nav Link Styles */
   .nav-link {
     outline: none;
     border: none;
-    transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .nav-link:focus,
@@ -88,68 +183,134 @@ const navItems: NavItem[] = [
 
   .nav-link.active {
     color: white !important;
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.14) !important;
   }
 
-  @media (max-width: 767px) {
-    nav {
-      bottom: 1.25rem;
-    }
+  /* Hide when footer starts */
+  .nav-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    transition:
+      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0.35s ease !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    nav {
-      animation: none !important;
-      transform: translateX(-50%) !important;
-      opacity: 1 !important;
+    #desktop-top-nav,
+    #desktop-side-nav,
+    #mobile-nav {
+      transition: none !important;
     }
   }
 </style>
 
 <script>
-  const navLinks = document.querySelectorAll("nav a[href^='#']");
+  const mobileNav = document.getElementById("mobile-nav");
+  const desktopTopNav = document.getElementById("desktop-top-nav");
+  const desktopSideNav = document.getElementById("desktop-side-nav");
+  let footerEl: HTMLElement | null = null;
+
+  function updateNavVisibility() {
+    if (!footerEl) {
+      footerEl = document.querySelector("footer");
+    }
+
+    // Check if footer is in view
+    let isNearFooter = false;
+    if (footerEl) {
+      const footerRect = footerEl.getBoundingClientRect();
+      if (footerRect.top <= window.innerHeight - 30) {
+        isNearFooter = true;
+      }
+    }
+
+    if (isNearFooter) {
+      mobileNav?.classList.add("nav-hidden");
+      desktopTopNav?.classList.add("nav-hidden");
+      desktopSideNav?.classList.add("nav-hidden");
+      return;
+    } else {
+      mobileNav?.classList.remove("nav-hidden");
+      desktopTopNav?.classList.remove("nav-hidden");
+      desktopSideNav?.classList.remove("nav-hidden");
+    }
+
+    const isDesktop = window.innerWidth >= 768;
+    if (!isDesktop) {
+      desktopTopNav?.classList.remove("nav-closed-left");
+      desktopSideNav?.classList.remove("nav-open-right");
+      return;
+    }
+
+    const scrollThreshold = 90;
+    if (window.scrollY > scrollThreshold) {
+      desktopTopNav?.classList.add("nav-closed-left");
+      desktopSideNav?.classList.add("nav-open-right");
+    } else {
+      desktopTopNav?.classList.remove("nav-closed-left");
+      desktopSideNav?.classList.remove("nav-open-right");
+    }
+  }
+
+  window.addEventListener("scroll", updateNavVisibility, { passive: true });
+  window.addEventListener("resize", updateNavVisibility, { passive: true });
+
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>("nav a[href^='#']");
+
+  function setActiveSection(id: string) {
+    navLinks.forEach((link) => {
+      const linkHref = link.getAttribute("href") || "";
+      if (linkHref === `#${id}`) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  }
 
   navLinks.forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
-      e.preventDefault();
       const target = e.currentTarget as HTMLAnchorElement;
       target.blur();
-
-      navLinks.forEach((link) => link.classList.remove("active"));
-      target.classList.add("active");
-
       const targetId = target.getAttribute("href")?.substring(1) || "";
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+      if (targetId) {
+        setActiveSection(targetId);
       }
     });
   });
 
   document.addEventListener("DOMContentLoaded", () => {
+    updateNavVisibility();
+
     const sections = document.querySelectorAll("section[id]");
-    const observerOptions = { threshold: 0.5 };
+    const observerOptions = { threshold: 0.4 };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          navLinks.forEach((link) => link.classList.remove("active"));
           const id = entry.target.getAttribute("id");
-          const activeLink = document.querySelector(`nav a[href="#${id}"]`);
-          if (activeLink) {
-            activeLink.classList.add("active");
+          if (id) {
+            setActiveSection(id);
           }
         }
       });
     };
 
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
-    );
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
     sections.forEach((section) => observer.observe(section));
+
+    if (!footerEl) {
+      footerEl = document.querySelector("footer");
+    }
+    if (footerEl) {
+      const footerObserver = new IntersectionObserver(
+        () => {
+          updateNavVisibility();
+        },
+        { threshold: [0, 0.1, 0.25], rootMargin: "0px 0px -30px 0px" }
+      );
+      footerObserver.observe(footerEl);
+    }
   });
 </script>

@@ -96,16 +96,46 @@ export function initPortfolioAnimations() {
       0.35
     );
 
-    heroTl.fromTo(
-      "#main-nav",
-      { y: 50, opacity: 0, scale: 0.94 },
-      { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power4.out" },
-      0.5
-    );
+    const isDesktop = window.innerWidth >= 768;
+
+    if (isDesktop) {
+      heroTl.fromTo(
+        "#desktop-top-nav",
+        { xPercent: -100, opacity: 0 },
+        {
+          xPercent: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: "power4.out",
+          onComplete: () => {
+            gsap.set("#desktop-top-nav", { clearProps: "xPercent,x" });
+          },
+        },
+        0.3
+      );
+      heroTl.fromTo(
+        "#desktop-top-nav a, #desktop-top-nav li",
+        { opacity: 0, x: -16 },
+        { opacity: 1, x: 0, duration: 0.6, stagger: 0.05, ease: "power3.out" },
+        0.55
+      );
+    } else {
+      heroTl.fromTo(
+        "#mobile-nav",
+        { y: 50, opacity: 0, scale: 0.94 },
+        { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power4.out" },
+        0.5
+      );
+    }
   };
 
   if (preloader && !prefersReduced) {
     gsap.set(".hero-line-inner", { yPercent: 120, opacity: 0 });
+    if (window.innerWidth >= 768) {
+      gsap.set("#desktop-top-nav", { xPercent: -100, opacity: 0 });
+    } else {
+      gsap.set("#mobile-nav", { y: 50, opacity: 0, scale: 0.94 });
+    }
     const counter = { val: 0 };
     const preloaderTl = gsap.timeline({
       onComplete: () => {
